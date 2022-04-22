@@ -8,6 +8,12 @@ data
 config.json
 password.txt
 
+#homeassistant
+custom_components
+.storage
+backups
+
+
 #arquvos
 _notas.txt
 .env
