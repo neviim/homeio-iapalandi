@@ -2,6 +2,7 @@
 letsencrypt
 nodered
 netdata
+doc
 
 #nginxProxy
 data
@@ -16,9 +17,13 @@ backups
 
 #arquvos
 _notas.txt
+old_*
 .env
 
 #log
 log
 *.log
+
+
+
 
