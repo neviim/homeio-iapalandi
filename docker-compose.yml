@@ -1,0 +1,90 @@
+version: '3'
+services:
+  # Home Assistant
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - ./homeassistant/config:/config
+      - ./homeassistant/hosts:/etc/hosts
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8123:8123
+    network_mode: host
+    restart: unless-stopped
+    privileged: true
+
+
+  # Mosquitto MQTT
+  # user: !secret mosquitto_user
+  # pwd: !secret mosquitto_pwd
+  # $ docker exec mosquitto mosquitto_passwd -b /mosquitto/config/password.txt admin mosquitto
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    depends_on:
+      - homeassistant
+
+
+  # Node Red
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered:/data
+    depends_on:
+      - homeassistant
+
+
+
+
+
+
+
+
+
+
+
+
+  # # Netdata
+  # netdata:
+  #   restart: always
+  #   hostname: netdata
+  #   image: titpetric/netdata
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   security_opt:
+  #     - apparmor:unconfined
+  #   ports:
+  #     - 19999:19999
+  #   volumes:
+  #     - ./netdata/netdataconfig:/etc/netdata
+  #     - ./netdata/netdatalib:/var/lib/netdata
+  #     - ./netdata/netdatacache:/var/cache/netdata
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+
+# # Rede
+# networks:
+#   default:
+#     ipam:
+#       config:
+#         - subnet: 172.10.0.0/24
+
+# # Volume
+# volumes:
+#   netdataconfig:
+#   netdatalib:
+#   netdatacache:

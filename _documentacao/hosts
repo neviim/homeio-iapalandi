@@ -1,0 +1,15 @@
+127.0.0.1          localhost
+::1                localhost
+127.0.1.1          pop-os.localdomain      pop-os
+
+# Camera Arlo
+104.18.30.98       ocapi-app.arlo.com
+#104.18.31.98 ocapi-app.arlo.com
+
+
+# Dominio local
+192.168.15.7       homeio.iapalandi.net
+192.168.15.7       nodered.iapalandi.net
+192.168.15.7       portainer.iapalandi.net
+192.168.15.7       homeio.iapalandi.net
+192.168.15.7       mosquitto.iapalandi.net

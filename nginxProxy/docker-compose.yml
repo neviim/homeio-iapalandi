@@ -1,0 +1,47 @@
+version: "3"
+services:
+  # App
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped 
+    ports:
+      - '80:80'     # Public HTTP Port1:
+      - '81:81'     # Admin Web Port:
+      - '443:443'   # Public HTTPS Port:
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./config.json:/app/config/production.json
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  # MariaDB
+  db:
+    image: 'yobasystems/alpine-mariadb:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  # Duckdns SSL
+  duckdns:
+    image: ghcr.io/linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/Sao_Paulo
+      - SUBDOMAINS=${DUCKDNS_SUBDOMAIN}
+      - TOKEN=${DUCKDNS_TOKEN}
+      - LOG_FILE=false
+    restart: unless-stopped
