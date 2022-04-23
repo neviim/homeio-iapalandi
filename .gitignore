@@ -13,6 +13,7 @@ password.txt
 custom_components
 .storage
 backups
+homeassistant
 
 
 #arquvos
