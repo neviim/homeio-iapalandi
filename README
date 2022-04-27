@@ -1,0 +1,16 @@
+# Raiz
+    docker-compose
+        # Monta os seguintes containes
+        - Homeassistant
+            letsencrypt
+            mosquitto
+            duckdns
+            nodered
+
+
+
+    # Subgrupo com docker-compose
+    - Rabbitmq
+         Dockerfile
+         docker-compose
+
