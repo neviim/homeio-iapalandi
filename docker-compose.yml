@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   # Home Assistant
   homeassistant:
     container_name: homeassistant
@@ -13,6 +14,8 @@ services:
     network_mode: host
     restart: unless-stopped
     privileged: true
+    # networks:
+    #   - iapalandi-network
 
 
   # Mosquitto MQTT
@@ -32,6 +35,8 @@ services:
       - ./mosquitto/log:/mosquitto/log
     depends_on:
       - homeassistant
+    # networks:
+    #   - iapalandi-network
 
 
   # Node Red
@@ -45,16 +50,19 @@ services:
       - ./nodered:/data
     depends_on:
       - homeassistant
+    # networks:
+    #   - iapalandi-network
 
 
+  
 
-
-
-
-
-
-
-
+  # worker:
+  #   build: ./worker
+  #   depends_on:
+  #     - rabbitmq
+  #   # Allow access to docker daemon
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
 
 
   # # Netdata

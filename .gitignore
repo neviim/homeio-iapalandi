@@ -1,5 +1,6 @@
 #diretorios
 letsencrypt
+storage
 nodered
 netdata
 doc
@@ -15,11 +16,13 @@ custom_components
 backups
 
 
-
 #arquvos
+_documentacao/README
 _notas.txt
 old_*
 .env
+
+
 
 #log
 log
