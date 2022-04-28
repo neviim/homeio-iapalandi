@@ -52,3 +52,33 @@ services:
       - homeassistant
     # networks:
     #   - iapalandi-network
+
+
+  # MariaDB
+  # https://onexlab-io.medium.com/docker-compose-mariadb-5eb7a37426a2
+  mysqlsrv:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: pwdroot
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: Dev
+      MYSQL_PASSWORD: Dev
+    ports:
+      - 3306:3306
+    volumes:             
+      - ./init:/docker-entrypoint-initdb.d
+    # networks:
+    #   - mysql-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9080:8080
+    # networks:
+    #   - mysql-network
+
+# networks: 
+#   mysql-network:
+#     driver: bridge
