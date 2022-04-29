@@ -42,6 +42,7 @@ services:
   # Node Red
   node-red:
     image: nodered/node-red:latest
+    restart: unless-stopped
     environment:
       - TZ=America/Sao_Paulo
     ports:
